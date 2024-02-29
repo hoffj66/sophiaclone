@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { PieChart, Pie, Cell } from 'recharts';
 
 
 interface IQuery {
@@ -13,11 +13,13 @@ interface IContentProps {
   query: IQuery;
 }
 
-export const BarChartExample = (props: IContentProps) => {
+export const PieChartExample = (props: IContentProps) => {
 
   const { query, dataset } = props
 
   const [data, setData] = useState([])
+
+  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042','#0088FE', '#00C49F', '#FFBB28', '#FF8042','#0088FE', '#00C49F', '#FFBB28', '#FF8042','#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
   const transform = (input: any): any => {
     return Object.entries(input).map((item: any) => {
@@ -42,26 +44,21 @@ export const BarChartExample = (props: IContentProps) => {
 
     <div style={{ backgroundColor: "white", margin: "20px", textAlign: "center"}}>
       <h3>{query.description}</h3>
-      <BarChart
-        width={800}
-        height={400}
-        data={data}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
-
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="count" fill="#8884d8" activeBar={<Rectangle fill="pink" stroke="blue" />} />
-
-      </BarChart>
+      <PieChart width={400} height={400}>
+          <Pie
+            data={data}
+            cx="50%"
+            cy="50%"
+            labelLine={true}
+            outerRadius={80}
+            fill="#8884d8"
+            dataKey="count"
+          >
+            {data.map((_, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+        </PieChart>
     </div>
 
 

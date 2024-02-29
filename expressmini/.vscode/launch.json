@@ -11,7 +11,8 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\app.js"
+            "args": ["--max-old-space-size=16096"],
+            "program": "${workspaceFolder}\\dist\\app.js"
         }
     ]
 }

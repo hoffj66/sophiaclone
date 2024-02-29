@@ -10,7 +10,12 @@ function FileUploader() {
 
     const handleUpload = async () => {
         if (selectedFile) {
-            // Perform file upload logic here
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+            await fetch('http://localhost:3000/upload', {
+                method: 'POST',
+                body: formData,
+            });
            
         } else {
             console.log('No file selected');

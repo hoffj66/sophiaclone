@@ -1,6 +1,14 @@
+import * as fs from 'fs'
+import * as dotenv from 'dotenv';
+import { downloadBlob, uploadBlob } from './storage';
+import multer from 'multer';
+
+dotenv.config();
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage});
 const express = require('express')
 const csv = require('csv-parser')
-const fs = require('fs')
 const app = express()
 const port = 3000
 
@@ -10,30 +18,57 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.get('/', (req, res) => {
+app.post('/upload', upload.single('file'), async (req, res) => {
+    const file = req.file;
+    if (!file) {
+        res.send(JSON.stringify({ "error": "file is required" }));
+        return;
+    }
+    await uploadBlob(file.buffer, file.originalname)
+    res.send(JSON.stringify({ "message": "file uploaded" }));
+});
+
+app.get('/', async (req, res) => {
     const results = [];
-    fs.createReadStream('./public/ev.csv')
+    if(!req.query?.dataset){
+        res.send(JSON.stringify({"error": "dataset is required"}));
+        return;
+    }
+    const dataset = `./public/${req.query.dataset}`
+    if(!fs.existsSync(dataset)){
+        await downloadBlob(req.query.dataset)
+    }
+    fs.createReadStream(dataset)
         .pipe(csv())
         .on('data', (data) => {
             results.push(data)
-        }
-        )
+        })
         .on('end', () => {
-            console.log(results);
             res.send(JSON.stringify(results.slice(0, 10)));
         });
 })
 
-app.get('/count', (req, res) => {
+app.get('/count', async (req, res) => {
     const results = [];
+    if(!req.query?.dataset){
+        res.send(JSON.stringify({"error": "dataset is required"}));
+        return;
+    }
+
+    const dataset = `./public/${req.query.dataset}`
+    if(!fs.existsSync(dataset)){
+        await downloadBlob(req.query.dataset)
+    }
     if(req.query?.by){
-        fs.createReadStream('./public/ev.csv')
+        fs.createReadStream(dataset)
             .pipe(csv())
             .on('data', (data) => {
                 results.push(data)
             })
+            .on('error', (err) => {
+                console.log(err)
+            })
             .on('end', () => {
-                console.log(results);
                 const getCounts = (by) => {
                     const counts = results.reduce((acc, curr, currIndex) => {
                         if(currIndex === 1){

@@ -1,30 +1,38 @@
-import { useEffect, useState } from 'react';
-import BarChartExample from './BarChartExample';
-import axios from 'axios';
 import '../App.css';
+import { BarChartExample } from './BarChartExample';
+import { PieChartExample } from './PieChartExample';
+import { Description } from './Description';
 
-const Content = () => {
 
-  const [data, setData] = useState([]);
+interface IQuery {
+  type : string;
+  by : string;
+  description : string;
+}
 
-  useEffect(() => {
-    axios.get('http://127.0.0.1:3000').then(response => {
-      console.log(response)
-      setData(response.data)
-    }).catch(err => {
-      console.log(err)
-    })}, []
-  );
+interface IContentProps {
+  dataset: string;
+  queries: IQuery[];
+  description : string;
+}
 
+const Content = (props : IContentProps) => {
+
+  const { dataset, queries } = props;
+
+  const renderQueries = (queries : IQuery[], dataset : string) => {
+    return queries.map((query : IQuery) => {
+      return (
+        // <BarChartExample query={query} dataset={dataset} />
+        <PieChartExample query={query} dataset={dataset} />
+      )
+    })
+  }
 
   return (
     <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center" }}>
-      <img src="/overview.png" alt="image" style={{ height: "728px", width: "350px", margin: "20px" }} />
-      <BarChartExample />
-      <BarChartExample />
-      <BarChartExample />
-      <BarChartExample />
-
+      <Description description={props.description} />
+      {renderQueries(queries, dataset)}
     </div>
   );
 }
