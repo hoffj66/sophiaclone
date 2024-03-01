@@ -32,15 +32,14 @@ export const BarChartExample = (props: IContentProps) => {
     fetch(`http://localhost:3000/count?by=${query.by}&dataset=${dataset}`)
       .then(response => response.json())
       .then(data => {
-        const transformedData = transform(data)
+        const transformedData = transform(data.data)
         setData(transformedData)
-      }
-      )
+      })
   }, [])
 
   return (
 
-    <div style={{ backgroundColor: "white", margin: "20px", textAlign: "center"}}>
+    <div style={{ backgroundColor: "white", margin: "20px", textAlign: "center" }}>
       <h3>{query.description}</h3>
       <BarChart
         width={800}

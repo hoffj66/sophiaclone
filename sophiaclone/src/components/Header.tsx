@@ -31,7 +31,7 @@ const Header = (props : any) => {
           Phasellus imperdiet, nulla et dictum interdum,
           nisi lorem egestas odio,
           vitae scelerisque enim ligula venenatis dolor.</p>
-        <textarea style={{ width: "800px", height: "100px" }}>What question or topic do you want to explore today?</textarea>
+        <textarea style={{ width: "800px", height: "100px" }} onChange={props.onQuestionChange} value={props.question} />
         <FileUploader />
         {radios()}
         <textarea style={{ width: "800px", height: "1000px" }} value = {props.outPrompt}/>

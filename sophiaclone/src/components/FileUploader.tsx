@@ -8,15 +8,17 @@ function FileUploader() {
         setSelectedFile(event.target.files[0]);
     };
 
-    const handleUpload = async () => {
+    const handleUpload = () => {
         if (selectedFile) {
             const formData = new FormData();
             formData.append('file', selectedFile);
-            await fetch('http://localhost:3000/upload', {
+            fetch('http://localhost:3000/upload', {
                 method: 'POST',
                 body: formData,
+            }).then(response => response.json())
+            .then(data => {
+                console.log(data.data);
             });
-           
         } else {
             console.log('No file selected');
         }

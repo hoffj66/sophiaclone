@@ -5,26 +5,28 @@ import { Description } from './Description';
 
 
 interface IQuery {
-  type : string;
-  by : string;
-  description : string;
+  type: string;
+  by: string;
+  description: string;
 }
 
 interface IContentProps {
   dataset: string;
   queries: IQuery[];
-  description : string;
+  description: string;
 }
 
-const Content = (props : IContentProps) => {
+const Content = (props: IContentProps) => {
 
   const { dataset, queries } = props;
 
-  const renderQueries = (queries : IQuery[], dataset : string) => {
-    return queries.map((query : IQuery) => {
+  const renderQueries = (queries: IQuery[], dataset: string) => {
+    return queries.map((query: IQuery) => {
       return (
-        // <BarChartExample query={query} dataset={dataset} />
-        <PieChartExample query={query} dataset={dataset} />
+        <>
+          <BarChartExample query={query} dataset={dataset} />
+        </>
+
       )
     })
   }

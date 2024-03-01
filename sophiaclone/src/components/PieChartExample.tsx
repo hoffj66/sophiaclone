@@ -34,10 +34,9 @@ export const PieChartExample = (props: IContentProps) => {
     fetch(`http://localhost:3000/count?by=${query.by}&dataset=${dataset}`)
       .then(response => response.json())
       .then(data => {
-        const transformedData = transform(data)
+        const transformedData = transform(data.data)
         setData(transformedData)
-      }
-      )
+      })
   }, [])
 
   return (
