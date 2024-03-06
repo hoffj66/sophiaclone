@@ -1,4 +1,5 @@
 import FileUploader from "./FileUploader";
+import '../App.css';
 
 const Header = (props : any) => {
   
@@ -6,6 +7,10 @@ const Header = (props : any) => {
     return(
       <form>
         <div className="radio">
+        <label>
+            <input type="radio" value="sales.csv" checked={props.dataset === 'sales.csv'} onChange={props.onSelect}/>
+            sales.csv
+          </label>
           <label>
             <input type="radio" value="ev.csv" checked={props.dataset === 'ev.csv'} onChange={props.onSelect}/>
             ev.csv
@@ -31,13 +36,13 @@ const Header = (props : any) => {
           Phasellus imperdiet, nulla et dictum interdum,
           nisi lorem egestas odio,
           vitae scelerisque enim ligula venenatis dolor.</p>
-        <textarea style={{ width: "800px", height: "100px" }} onChange={props.onQuestionChange} value={props.question} />
+        <textarea className="sophia-textarea" onChange={props.onQuestionChange} value={props.question} />
         <FileUploader />
         {radios()}
-        <textarea style={{ width: "800px", height: "1000px" }} value = {props.outPrompt}/>
-        <textarea style={{ width: "800px", height: "1000px" }} onChange={props.onDescriptionChange}>Description Prompt</textarea>
-        <textarea style={{ width: "800px", height: "1000px" }} value = {props.queryPrompt}/>
-        <textarea style={{ width: "800px", height: "1000px" }} onChange={props.onQueriesChange}>Query Prompt</textarea>
+        <textarea className="sophia-textarea" value={props.outPrompt} />
+        <textarea className="sophia-textarea" onChange={props.onDescriptionChange}>Description Prompt</textarea>
+        <textarea className="sophia-textarea" value={props.queryPrompt} />
+        <textarea className="sophia-textarea" onChange={props.onQueriesChange}>Query Prompt</textarea>
       </div>
     </div>
   )

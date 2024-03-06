@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import '../App.css';
 
 
 interface IQuery {
@@ -39,16 +40,16 @@ export const BarChartExample = (props: IContentProps) => {
 
   return (
 
-    <div style={{ backgroundColor: "white", margin: "20px", textAlign: "center" }}>
-      <h3>{query.description}</h3>
+    <div className='sophia-bar-chart'>
+      <h2>{query.description}</h2>
       <BarChart
         width={800}
-        height={400}
+        height={200}
         data={data}
         margin={{
           top: 5,
-          right: 30,
-          left: 20,
+          right: 5,
+          left: 5,
           bottom: 5,
         }}
 

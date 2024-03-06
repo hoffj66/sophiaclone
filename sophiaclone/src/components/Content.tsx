@@ -1,7 +1,7 @@
 import '../App.css';
 import { BarChartExample } from './BarChartExample';
-import { PieChartExample } from './PieChartExample';
 import { Description } from './Description';
+import { NextSteps } from './NextSteps';
 
 
 interface IQuery {
@@ -32,9 +32,17 @@ const Content = (props: IContentProps) => {
   }
 
   return (
-    <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center" }}>
-      <Description description={props.description} />
-      {renderQueries(queries, dataset)}
+    <div className='sophia-content'>
+      <div className='sophia-content-left'>
+        <Description description={props.description} />
+      </div>
+      <div className='sophia-content-middle'>
+        {renderQueries(queries, dataset)}
+      </div>
+      <div className='sophia-content-right'>
+        <NextSteps />
+      </div>
+      
     </div>
   );
 }

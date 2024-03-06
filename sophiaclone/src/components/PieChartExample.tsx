@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { PieChart, Pie, Cell } from 'recharts';
+import '../App.css';
 
 
 interface IQuery {
@@ -40,8 +41,7 @@ export const PieChartExample = (props: IContentProps) => {
   }, [])
 
   return (
-
-    <div style={{ backgroundColor: "white", margin: "20px", textAlign: "center"}}>
+    <div className='chart'>
       <h3>{query.description}</h3>
       <PieChart width={400} height={400}>
           <Pie
@@ -59,8 +59,6 @@ export const PieChartExample = (props: IContentProps) => {
           </Pie>
         </PieChart>
     </div>
-
-
   );
 
 }
